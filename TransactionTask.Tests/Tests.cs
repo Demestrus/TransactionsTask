@@ -27,20 +27,18 @@ namespace TransactionTask.Tests
             Assert.True(result.Success);
 
             result = await serviceFactory.Invoke().AddUser("Иван", "Петров");
-            Assert.False(result.Success);
-            Console.WriteLine(result.ErrorMsg);
+            Assert.True(result.Success);
 
             result = await serviceFactory.Invoke().AddUser("Петр", "Иванов");
-            Assert.False(result.Success);
-            Console.WriteLine(result.ErrorMsg);
-
-            result = await serviceFactory.Invoke().AddUser("Петр", "Петров");
             Assert.True(result.Success);
+
+            result = await serviceFactory.Invoke().AddUser("Иван", "Иванов");
+            Assert.False(result.Success);
 
             using (var db = new TaskDbContext())
             {
                 var usersCount = db.Users.Count();
-                Assert.AreEqual(usersCount, 2);
+                Assert.AreEqual(usersCount, 3);
             }
         }
 

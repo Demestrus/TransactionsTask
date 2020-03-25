@@ -1,4 +1,6 @@
-﻿namespace TransactionTask.Core.Models
+﻿using System;
+
+namespace TransactionTask.Core.Models
 {
     public class User
     {
@@ -16,5 +18,6 @@
         public int Id { get; set; }
         public string Name { get; set; }
         public string Surname { get; set; }
+        public long CreateDate { get; set; }
     }
 }

@@ -59,6 +59,7 @@
           <HintPath>..\packages\System.Runtime.CompilerServices.Unsafe.4.5.2\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
           <Private>True</Private>
         </Reference>
+        <Reference Include="System.Transactions" />
         <Reference Include="System.Web.DynamicData" />
         <Reference Include="System.Web.ApplicationServices" />
         <Reference Include="System.ComponentModel.DataAnnotations" />
@@ -94,9 +95,9 @@
         <Compile Include="BusinessLogic\IUsersService.cs" />
         <Compile Include="BusinessLogic\UsersService.cs" />
         <Compile Include="Dto\UserResult.cs" />
-        <Compile Include="Migrations\202003241123392_Initial.cs" />
-        <Compile Include="Migrations\202003241123392_Initial.Designer.cs">
-          <DependentUpon>202003241123392_Initial.cs</DependentUpon>
+        <Compile Include="Migrations\202003251444212_InitialMigration.cs" />
+        <Compile Include="Migrations\202003251444212_InitialMigration.Designer.cs">
+          <DependentUpon>202003251444212_InitialMigration.cs</DependentUpon>
         </Compile>
         <Compile Include="Migrations\Configuration.cs" />
         <Compile Include="Models\TaskDbContext.cs" />
@@ -107,8 +108,8 @@
         <None Include="packages.config" />
     </ItemGroup>
     <ItemGroup>
-      <EmbeddedResource Include="Migrations\202003241123392_Initial.resx">
-        <DependentUpon>202003241123392_Initial.cs</DependentUpon>
+      <EmbeddedResource Include="Migrations\202003251444212_InitialMigration.resx">
+        <DependentUpon>202003251444212_InitialMigration.cs</DependentUpon>
       </EmbeddedResource>
     </ItemGroup>
     <PropertyGroup>

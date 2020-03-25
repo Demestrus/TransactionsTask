@@ -1,31 +1,30 @@
-﻿using System.Data.Entity.Migrations;
-
-namespace TransactionTask.Core.Migrations
+﻿namespace TransactionTask.Core.Migrations
 {
-    public partial class Initial : DbMigration
+    using System;
+    using System.Data.Entity.Migrations;
+    
+    public partial class InitialMigration : DbMigration
     {
         private const string CreateTableSql =
             "CREATE TABLE [Users] (" +
             "    Id INT IDENTITY PRIMARY KEY, "+
-            "    Name NVARCHAR(30), " +
-            "    Surname NVARCHAR(30)" +
+            "    Name NVARCHAR(30) NOT NULL, " +
+            "    Surname NVARCHAR(30) NOT NULL, " +
+            "    CreateDate bigint NOT NULL, " +
             ")";
 
         private const string DropTableSql =
             "DROP TABLE [Users]";
 
         private const string ValidateUserProcedureSql =
-            "CREATE PROC ValidateUser" +
-            "    @Name NVARCHAR(30)," +
-            "    @Surname NVARCHAR(30)" +
+            "CREATE PROC ValidateUser " +
+            "    @Name NVARCHAR(30), " +
+            "    @Surname NVARCHAR(30) " +
             "AS" +
             "    BEGIN" +
             "        IF EXISTS (SELECT Id FROM Users" +
-            "                   WHERE [Name] = @Name)" +
-            "            RAISERROR ('User with Name \"%s\" exists.', 15, -1, @Name)" +
-            "        IF EXISTS (SELECT Id FROM Users" +
-            "                   WHERE [Surname] = @Surname)" +
-            "            RAISERROR ('User with Surname \"%s\" exists.', 15, -1, @Surname)" +
+            "                   WHERE [Name] = @Name AND [Surname] = @Surname)" +
+            "            RAISERROR ('User with name \"%s %s\" exists.', 11, -1, @Name, @Surname)" +
             "    END ";
 
         private const string DropProcedureSql =
