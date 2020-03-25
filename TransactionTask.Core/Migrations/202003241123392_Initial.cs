@@ -22,10 +22,10 @@ namespace TransactionTask.Core.Migrations
             "    BEGIN" +
             "        IF EXISTS (SELECT Id FROM Users" +
             "                   WHERE [Name] = @Name)" +
-            "            RAISERROR ('User with Name \"%s\" exists.', 16, -1, @Name)" +
+            "            RAISERROR ('User with Name \"%s\" exists.', 15, -1, @Name)" +
             "        IF EXISTS (SELECT Id FROM Users" +
             "                   WHERE [Surname] = @Surname)" +
-            "            RAISERROR ('User with Surname \"%s\" exists.', 16, -1, @Surname)" +
+            "            RAISERROR ('User with Surname \"%s\" exists.', 15, -1, @Surname)" +
             "    END ";
 
         private const string DropProcedureSql =

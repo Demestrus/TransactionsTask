@@ -93,6 +93,7 @@
     <ItemGroup>
         <Compile Include="BusinessLogic\IUsersService.cs" />
         <Compile Include="BusinessLogic\UsersService.cs" />
+        <Compile Include="Dto\UserResult.cs" />
         <Compile Include="Migrations\202003241123392_Initial.cs" />
         <Compile Include="Migrations\202003241123392_Initial.Designer.cs">
           <DependentUpon>202003241123392_Initial.cs</DependentUpon>

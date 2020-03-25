@@ -15,9 +15,14 @@ namespace TransactionTask.WebApi.Controllers
         }
         
         [HttpPost]
-        public async Task AddUser(UserDto user)
+        public async Task<IHttpActionResult> AddUser(UserDto user)
         {
-            await _service.AddUser(user.Name, user.Surname);
+            var result = await _service.AddUser(user.Name, user.Surname);
+
+            if (!result.Success)
+                return BadRequest(result.ErrorMsg);
+            
+            return Ok();
         }
     }
 }
