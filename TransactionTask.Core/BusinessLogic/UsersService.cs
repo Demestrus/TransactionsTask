@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using TransactionTask.Core.Models;
 
 namespace TransactionTask.Core.BusinessLogic
@@ -16,13 +17,22 @@ namespace TransactionTask.Core.BusinessLogic
         {
             using (var dbContextTransaction = _dbContext.Database.BeginTransaction())
             {
-                _dbContext.Database.ExecuteSqlCommand("EXEC ValidateUser @p0, @p1", name, surname);
-            
-                _dbContext.Users.Add(new User(name, surname));
+                try
+                {
+                    await _dbContext.Database.ExecuteSqlCommandAsync("EXEC ValidateUser @p0, @p1", name, surname);
 
-                _dbContext.SaveChanges();
-                
-                dbContextTransaction.Commit();
+                    _dbContext.Users.Add(new User(name, surname));
+
+                    await _dbContext.SaveChangesAsync();
+
+                    dbContextTransaction.Commit();
+                }
+                catch (Exception ex)
+                {
+                    dbContextTransaction.Rollback();
+                    
+                    //TODO return error response
+                }
             }
         }
     }
