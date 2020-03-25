@@ -8,6 +8,12 @@ namespace TransactionTask.Core.Models
         {
             
         }
+
+        public TaskDbContext(string nameOfConnectionString) : base(nameOfConnectionString)
+        {
+            
+        }
+        
         public DbSet<User> Users { get; set; }
     }
 }
