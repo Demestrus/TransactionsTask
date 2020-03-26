@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Data.Entity;
 using System.Threading.Tasks;
 
@@ -17,6 +18,20 @@ namespace TransactionTask.Core.Models
         }
         
         public DbSet<User> Users { get; set; }
+        public DbSet<LogEntry> Log { get; set; }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder
+                .Entity<LogEntry>()
+                .HasKey(s => s.TimeStamp);
+
+            modelBuilder.Entity<LogEntry>()
+                .Property(t => t.TimeStamp)
+                .HasDatabaseGeneratedOption(DatabaseGeneratedOption.None);
+            
+            base.OnModelCreating(modelBuilder);
+        }
 
         public override int SaveChanges()
         {

@@ -1,10 +1,13 @@
-﻿using System.Threading.Tasks;
-using TransactionTask.Core.Dto;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using TransactionTask.Core.Models;
 
 namespace TransactionTask.Core.BusinessLogic
 {
     public interface IUsersService
     {
-        Task<UserResult> AddUser(string name, string surname);
+        Task<User> AddUser(string name, string surname);
+
+        IEnumerable<User> GetUsers();
     }
 }

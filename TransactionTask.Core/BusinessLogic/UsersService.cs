@@ -1,7 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Data.SqlClient;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Transactions;
 using TransactionTask.Core.Dto;
+using TransactionTask.Core.Exceptions;
 using TransactionTask.Core.Models;
 
 namespace TransactionTask.Core.BusinessLogic
@@ -15,7 +19,7 @@ namespace TransactionTask.Core.BusinessLogic
             _dbContext = dbContext;
         }
 
-        public async Task<UserResult> AddUser(string name, string surname)
+        public async Task<User> AddUser(string name, string surname)
         {
             try
             {
@@ -32,12 +36,28 @@ namespace TransactionTask.Core.BusinessLogic
                     await _dbContext.SaveChangesAsync();
                     transactionScope.Complete();
                     
-                    return new UserResult(user);
+                    return user;
                 }
             }
-            catch (Exception ex)
+            catch (SqlException ex)
             {
-                return new UserResult(false, ex.Message);
+                throw new BadRequestException(ex.Message);
+            }
+        }
+
+        public IEnumerable<User> GetUsers()
+        {
+            using (var transactionScope = new TransactionScope(
+                TransactionScopeOption.Required,
+                new TransactionOptions()
+                {
+                    IsolationLevel = IsolationLevel.ReadUncommitted
+                })
+            )
+            {
+                var users= _dbContext.Users.ToList();
+                transactionScope.Complete();
+                return users;
             }
         }
     }

@@ -1,5 +1,7 @@
 ﻿using System.Web;
 using System.Web.Mvc;
+using TransactionTask.Core.Models;
+using TransactionTask.WebApi.Exceptions;
 
 namespace TransactionTask.WebApi
 {

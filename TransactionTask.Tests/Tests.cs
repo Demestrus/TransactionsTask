@@ -23,17 +23,16 @@ namespace TransactionTask.Tests
         {
             Func<UsersService> serviceFactory = () => new UsersService(new TaskDbContext());
 
-            var result = await serviceFactory.Invoke().AddUser("Иван", "Иванов");
-            Assert.True(result.Success);
+            var user = await serviceFactory.Invoke().AddUser("Иван", "Иванов");
+            Assert.NotNull(user);
 
-            result = await serviceFactory.Invoke().AddUser("Иван", "Петров");
-            Assert.True(result.Success);
+            user = await serviceFactory.Invoke().AddUser("Иван", "Петров");
+            Assert.NotNull(user);
 
-            result = await serviceFactory.Invoke().AddUser("Петр", "Иванов");
-            Assert.True(result.Success);
+            user = await serviceFactory.Invoke().AddUser("Петр", "Иванов");
+            Assert.NotNull(user);
 
-            result = await serviceFactory.Invoke().AddUser("Иван", "Иванов");
-            Assert.False(result.Success);
+            Assert.CatchAsync(() => serviceFactory.Invoke().AddUser("Иван", "Иванов"));
 
             using (var db = new TaskDbContext())
             {

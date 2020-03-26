@@ -95,11 +95,17 @@
         <Compile Include="BusinessLogic\IUsersService.cs" />
         <Compile Include="BusinessLogic\UsersService.cs" />
         <Compile Include="Dto\UserResult.cs" />
+        <Compile Include="Exceptions\BadRequestException.cs" />
         <Compile Include="Migrations\202003251444212_InitialMigration.cs" />
         <Compile Include="Migrations\202003251444212_InitialMigration.Designer.cs">
           <DependentUpon>202003251444212_InitialMigration.cs</DependentUpon>
         </Compile>
+        <Compile Include="Migrations\202003261252295_ErrorLogMigration.cs" />
+        <Compile Include="Migrations\202003261252295_ErrorLogMigration.Designer.cs">
+          <DependentUpon>202003261252295_ErrorLogMigration.cs</DependentUpon>
+        </Compile>
         <Compile Include="Migrations\Configuration.cs" />
+        <Compile Include="Models\Log.cs" />
         <Compile Include="Models\TaskDbContext.cs" />
         <Compile Include="Models\User.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
@@ -110,6 +116,9 @@
     <ItemGroup>
       <EmbeddedResource Include="Migrations\202003251444212_InitialMigration.resx">
         <DependentUpon>202003251444212_InitialMigration.cs</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Migrations\202003261252295_ErrorLogMigration.resx">
+        <DependentUpon>202003261252295_ErrorLogMigration.cs</DependentUpon>
       </EmbeddedResource>
     </ItemGroup>
     <PropertyGroup>
