@@ -1,5 +1,6 @@
 using System.Web.Http;
 using Swashbuckle.Application;
+using Swashbuckle.OData;
 using TransactionTask.WebApi;
 using WebActivatorEx;
 
@@ -12,7 +13,7 @@ namespace TransactionTask.WebApi
         public static void Register()
         {
             var thisAssembly = typeof(SwaggerConfig).Assembly;
-
+            
             GlobalConfiguration.Configuration
                 .EnableSwagger(c =>
                     {
@@ -176,6 +177,10 @@ namespace TransactionTask.WebApi
                         // alternative implementation for ISwaggerProvider with the CustomProvider option.
                         //
                         //c.CustomProvider((defaultProvider) => new CachingSwaggerProvider(defaultProvider));
+                        c.CustomProvider(defaultProvider => new ODataSwaggerProvider(defaultProvider, c, GlobalConfiguration.Configuration).Configure(odataConfig =>
+                        {
+                            odataConfig.IncludeNavigationProperties();
+                        }));
                     })
                 .EnableSwaggerUi(c =>
                     {

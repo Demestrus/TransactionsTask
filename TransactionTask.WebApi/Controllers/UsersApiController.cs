@@ -7,25 +7,28 @@ using TransactionTask.WebApi.Models;
 
 namespace TransactionTask.WebApi.Controllers
 {
-    public class UsersController : ApiController
+    [RoutePrefix("api/Users")]
+    public class UsersApiController : ApiController
     {
         private readonly IUsersService _service;
         private readonly IMapper _mapper;
 
-        public UsersController(IUsersService service, IMapper mapper)
+        public UsersApiController(IUsersService service, IMapper mapper)
         {
             _service = service;
             _mapper = mapper;
         }
 
         [HttpGet]
+        [Route("")]
         public IEnumerable<ExistingUserDto> GetUsers()
         {
             var users = _service.GetUsers();
             return _mapper.Map<IEnumerable<ExistingUserDto>>(users);
         }
-        
+
         [HttpPost]
+        [Route("")]
         public async Task<IHttpActionResult> AddUser(UserDto userDto)
         {
             if (!ModelState.IsValid)

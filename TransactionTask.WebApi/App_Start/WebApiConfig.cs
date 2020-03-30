@@ -1,8 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web.Http;
+﻿using System.Web.Http;
 using System.Web.Http.ExceptionHandling;
+using Microsoft.AspNet.OData.Builder;
+using Microsoft.AspNet.OData.Extensions;
+using TransactionTask.Core.Models;
 using TransactionTask.WebApi.Exceptions;
 
 namespace TransactionTask.WebApi
@@ -25,6 +25,23 @@ namespace TransactionTask.WebApi
             config.Services.Add(typeof(IExceptionLogger), new DbExceptionLogger());
             
             config.Services.Replace(typeof(IExceptionHandler), new ServerErrorExceptionHandler());
+            
+            ODataModelBuilder builder = new ODataConventionModelBuilder();
+            
+            builder.EntitySet<User>("Users")
+                .EntityType
+                .Count()
+                .Filter()
+                .OrderBy()
+                .Expand()
+                .Select();
+            
+            config.MapODataServiceRoute(
+                routeName: "ODataRoute",
+                routePrefix: "odata",
+                model: builder.GetEdmModel());
+            
+            config.AddODataQueryFilter();
         }
     }
 }
