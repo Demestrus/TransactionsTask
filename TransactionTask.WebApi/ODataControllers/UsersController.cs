@@ -1,28 +1,58 @@
 ﻿using System.Linq;
+using System.Threading.Tasks;
 using System.Web.Http;
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using Microsoft.AspNet.OData;
+using TransactionTask.Core.BusinessLogic;
 using TransactionTask.Core.Models;
+using TransactionTask.WebApi.Models;
 
 namespace TransactionTask.WebApi.ODataControllers
 {
     public class UsersController : ODataController
     {
-        private readonly TaskDbContext _db;
+        private readonly IUsersService _service;
+        private readonly IMapper _mapper;
 
-        public UsersController(TaskDbContext db)
+        public UsersController(IUsersService service, IMapper mapper)
         {
-            _db = db;
+            _service = service;
+            _mapper = mapper;
         }
         
-        public IQueryable<User> Get()
+        public IQueryable<ExistingUserDto> Get()
         {
-            return _db.Users;
+            return _service.GetUsers()
+                .AsQueryable()
+                .ProjectTo<ExistingUserDto>(_mapper.ConfigurationProvider);
         }
         
-        public SingleResult<User> Get([FromODataUri] int id)
+        public async Task<SingleResult<ExistingUserDto>> Get([FromODataUri] int key)
         {
-            var result = _db.Users.Where(p => p.Id == id);
-            return SingleResult.Create(result);
+            var user = await _service.GetUser(key);
+            return SingleResult.Create(new [] {_mapper.Map<ExistingUserDto>(user)}.AsQueryable());
+        }
+
+        public async Task<IHttpActionResult> Post(UserDto newUser)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+            
+            var user = await _service.AddUser(newUser.Name, newUser.Surname);
+            return Ok(_mapper.Map<ExistingUserDto>(user));
+        }
+
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, User update)
+        {
+            var user = await _service.UpdateUser(key, update);
+
+            return Ok(_mapper.Map<ExistingUserDto>(user));
+        }
+
+        public async Task<int> Delete([FromODataUri] int key)
+        {
+            return await _service.RemoveUser(key);
         }
     }
 }

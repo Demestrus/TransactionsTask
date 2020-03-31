@@ -4,6 +4,7 @@ using Microsoft.AspNet.OData.Builder;
 using Microsoft.AspNet.OData.Extensions;
 using TransactionTask.Core.Models;
 using TransactionTask.WebApi.Exceptions;
+using TransactionTask.WebApi.Models;
 
 namespace TransactionTask.WebApi
 {
@@ -35,7 +36,10 @@ namespace TransactionTask.WebApi
                 .OrderBy()
                 .Expand()
                 .Select();
-            
+
+            builder.ComplexType<UserDto>();
+            builder.ComplexType<ExistingUserDto>();
+
             config.MapODataServiceRoute(
                 routeName: "ODataRoute",
                 routePrefix: "odata",

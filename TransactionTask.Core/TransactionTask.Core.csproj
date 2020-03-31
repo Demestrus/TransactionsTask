@@ -96,6 +96,7 @@
         <Compile Include="BusinessLogic\UsersService.cs" />
         <Compile Include="Dto\UserResult.cs" />
         <Compile Include="Exceptions\BadRequestException.cs" />
+        <Compile Include="Exceptions\NotFoundException.cs" />
         <Compile Include="Migrations\202003251444212_InitialMigration.cs" />
         <Compile Include="Migrations\202003251444212_InitialMigration.Designer.cs">
           <DependentUpon>202003251444212_InitialMigration.cs</DependentUpon>
@@ -103,6 +104,10 @@
         <Compile Include="Migrations\202003261252295_ErrorLogMigration.cs" />
         <Compile Include="Migrations\202003261252295_ErrorLogMigration.Designer.cs">
           <DependentUpon>202003261252295_ErrorLogMigration.cs</DependentUpon>
+        </Compile>
+        <Compile Include="Migrations\202003311021059_NotNullableUserFields.cs" />
+        <Compile Include="Migrations\202003311021059_NotNullableUserFields.Designer.cs">
+          <DependentUpon>202003311021059_NotNullableUserFields.cs</DependentUpon>
         </Compile>
         <Compile Include="Migrations\Configuration.cs" />
         <Compile Include="Models\Log.cs" />
@@ -119,6 +124,9 @@
       </EmbeddedResource>
       <EmbeddedResource Include="Migrations\202003261252295_ErrorLogMigration.resx">
         <DependentUpon>202003261252295_ErrorLogMigration.cs</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Include="Migrations\202003311021059_NotNullableUserFields.resx">
+        <DependentUpon>202003311021059_NotNullableUserFields.cs</DependentUpon>
       </EmbeddedResource>
     </ItemGroup>
     <PropertyGroup>

@@ -24,6 +24,14 @@ namespace TransactionTask.WebApi.Exceptions
                         StatusCode = HttpStatusCode.BadRequest
                     };
                     break;
+                case NotFoundException notFoundException:
+                    context.Result = new TextPlainErrorResult
+                    {
+                        Request = context.ExceptionContext.Request,
+                        Content = notFoundException.Message,
+                        StatusCode = HttpStatusCode.NotFound
+                    };
+                    break;
                 default:
                     context.Result = new TextPlainErrorResult
                     {

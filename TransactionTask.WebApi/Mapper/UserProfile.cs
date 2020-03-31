@@ -11,6 +11,8 @@ namespace TransactionTask.WebApi.Mapper
         {
             CreateMap<User, ExistingUserDto>();
 
+            CreateMap<UserDto, User>();
+
             CreateMap<long, DateTime>()
                 .ConvertUsing(s => new DateTime(s).ToLocalTime());
             //в идеале преобразование в локальное время следует делать

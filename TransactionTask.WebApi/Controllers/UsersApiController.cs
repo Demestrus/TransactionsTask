@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using System.Web.Http;
 using AutoMapper;
 using TransactionTask.Core.BusinessLogic;
+using TransactionTask.Core.Models;
 using TransactionTask.WebApi.Models;
 
 namespace TransactionTask.WebApi.Controllers
@@ -26,6 +27,14 @@ namespace TransactionTask.WebApi.Controllers
             var users = _service.GetUsers();
             return _mapper.Map<IEnumerable<ExistingUserDto>>(users);
         }
+        
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<ExistingUserDto> GetUsers(int id)
+        {
+            var user = await _service.GetUser(id);
+            return _mapper.Map<ExistingUserDto>(user);
+        }
 
         [HttpPost]
         [Route("")]
@@ -37,6 +46,25 @@ namespace TransactionTask.WebApi.Controllers
             var user = await _service.AddUser(userDto.Name, userDto.Surname);
 
             return Ok(_mapper.Map<ExistingUserDto>(user));
+        }
+
+        [HttpPut]
+        [Route("")]
+        public async Task<IHttpActionResult> UpdateUser(int id, UserDto userDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var user = await _service.UpdateUser(id, _mapper.Map<User>(userDto));
+
+            return Ok(_mapper.Map<ExistingUserDto>(user));
+        }
+
+        [HttpDelete]
+        [Route("")]
+        public async Task<int> DeleteUser(int id)
+        {
+            return await _service.RemoveUser(id);
         }
     }
 }
