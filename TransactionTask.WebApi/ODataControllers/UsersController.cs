@@ -43,9 +43,9 @@ namespace TransactionTask.WebApi.ODataControllers
             return Ok(_mapper.Map<ExistingUserDto>(user));
         }
 
-        public async Task<IHttpActionResult> Put([FromODataUri] int key, User update)
+        public async Task<IHttpActionResult> Put([FromODataUri] int key, UserDto update)
         {
-            var user = await _service.UpdateUser(key, update);
+            var user = await _service.UpdateUser(key, _mapper.Map<User>(update));
 
             return Ok(_mapper.Map<ExistingUserDto>(user));
         }

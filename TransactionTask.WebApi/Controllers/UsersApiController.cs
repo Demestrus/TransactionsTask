@@ -49,7 +49,7 @@ namespace TransactionTask.WebApi.Controllers
         }
 
         [HttpPut]
-        [Route("")]
+        [Route("{id}")]
         public async Task<IHttpActionResult> UpdateUser(int id, UserDto userDto)
         {
             if (!ModelState.IsValid)
@@ -61,7 +61,7 @@ namespace TransactionTask.WebApi.Controllers
         }
 
         [HttpDelete]
-        [Route("")]
+        [Route("{id}")]
         public async Task<int> DeleteUser(int id)
         {
             return await _service.RemoveUser(id);
